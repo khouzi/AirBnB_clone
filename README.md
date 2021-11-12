@@ -14,11 +14,13 @@ This first step is very important because we will use what we build during this 
 ## Installation
 
 To use our AirBnB clone console you need to:
+
 ```git clone https://github.com/youssefboussaid/AirBnB_clone.git```
 
 
 
 Use  the command interpreter hbnb in an interactive mode:
+
 `
 ./console.py
 `
@@ -28,4 +30,5 @@ Use  the command interpreter hbnb in an interactive mode:
 
 
 Use hbnb in non-interactive mode too by:
+
 `echo "command" | ./console.py`
