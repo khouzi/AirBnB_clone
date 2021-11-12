@@ -6,6 +6,13 @@ console module
 import cmd
 from models import storage
 from models.base_model import BaseModel
+from models.user import User
+from models.state import State
+from models.city import City
+from models.amenity import Amenity
+from models.place import Place
+from models.review import Review
+
 
 
 class HBNBCommand(cmd.Cmd):
@@ -84,22 +91,27 @@ class HBNBCommand(cmd.Cmd):
         """
         Deletes an instance based on the class name and id
         """
-        args = args.split()
-        if args == "":
+        if not args:
             print("** class name missing **")
             return
-        if args not in self.classes:
+        tokens = args.split(" ")
+        objects = storage.all()
+
+        if tokens[0] in self.classes:
+            if len(tokens) < 2:
+                print("** instance id missing **")
+                return
+            name = tokens[0] + "." + tokens[1]
+            if name not in objects:
+                print("** no instance found **")
+            else:
+                obj = objects[name]
+                if obj:
+                    objs = storage.all()
+                    del objs["{}.{}".format(type(obj).__name__, obj.id)]
+                    storage.save()
+        else:
             print("** class doesn't exist **")
-            return
-        if len(args) == 1:
-            print("** instance id missing **")
-            return
-        dict_obj = storage.all()
-        my_key = args[0] + "." + args[1]
-        for my_key in dict_obj:
-            del dict_obj[my_key]
-            storage.save()
-            print(storage.all())
 
     def do_all(self, args):
         """
@@ -128,15 +140,26 @@ class HBNBCommand(cmd.Cmd):
         name and id by adding or updating attribute
         """
         args = args.split()
+        objects = storage.all()
         if args == "":
             print("** class name missing **")
-            return
         if args[0] not in self.classes:
             print("** class doesn't exist **")
-            return
-        if args[1] == "":
+        if len(args) < 2:
             print("** instance id missing **")
-            return
+        else:
+            k = "{}.{}".format(args[0], args[1])
+            if k in objects:
+                if len(args) < 3:
+                    print("** attribute name missing **")
+                if len(args) < 4:
+                    print("** value missing **")
+                else:
+                    obj = objects[k]
+                    setattr(obj , args[2], args[3])
+            else:
+                print("** no instance found **")
+
 
 
 if __name__ == '__main__':
