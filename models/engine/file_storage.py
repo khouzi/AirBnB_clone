@@ -40,7 +40,7 @@ class FileStorage:
         new_dict = {}
         for k, v in self.__objects.items():
             new_dict[k] = v.to_dict()
-        with open(self.__file_path, "w", encoding="UTF-8" ) as f:
+        with open(self.__file_path, "w", encoding="UTF-8") as f:
             json.dump(new_dict, f)
 
     def reload(self):
@@ -53,5 +53,5 @@ class FileStorage:
             for k, v in obj.items():
                 class_name = k.split('.')[0]
                 self.__objects[k] = eval(class_name)(**v)
-        except:
+        except BaseException:
             pass
