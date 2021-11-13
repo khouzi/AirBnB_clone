@@ -1,53 +1,66 @@
 #!/usr/bin/python3
-
+"""
+    Test Case For Amenity Model and its Test
+"""
+from models import BaseModel
+from models import Amenity
 import unittest
+import inspect
+import time
+from datetime import datetime
+import pep8 as pcs
+from unittest import mock
 import models
-from models.base_model import BaseModel
-from models.user import User
-from models.amenity import Amenity
-from models.state import State
-from models.city import City
-from models.review import Review
-from models.place import Place
 
 
-class amenityTest(unittest.TestCase):
-    '''
-    Test cases for base_model class
-    '''
-    def setUp(self):
+class TestAmenity(unittest.TestCase):
+    """
+        unitesst for user class
+    """
+    def issub_class(self):
         """
-        simple set up
+            test if Amenity class is sub class of base model
         """
-        self.new_inst = Amenity()
+        insta = Amenity()
+        self.assertIsInstance(insta, BaseModel)
+        self.assertTrue(hasattr(insta, "id"))
+        self.assertTrue(hasattr(insta, "created_at"))
+        self.assertTrue(hasattr(insta, "update_at"))
 
-    def tearDown(self):
+    def test_name(self):
         """
-        tear down method
+            test class atribute name
         """
-        del self.new_inst
+        insta = Amenity()
+        self.assertTrue(hasattr(insta, "name"))
+        self.assertEqual(insta.name, "")
 
-    def test_is_basemodel_inst(self):
+    def test_to_dictAmenity(self):
         """
-        tests if new_inst is an instance of BaseModel
+            test to dict method with Amenity and the type
+            and content
         """
-        self.assertIsInstance(self.new_inst, BaseModel)
+        insta = Amenity()
+        dict_cont = insta.to_dict()
+        self.assertEqual(type(dict_cont), dict)
+        for attr in insta.__dict__:
+            self.assertTrue(attr in dict_cont)
+            self.assertTrue("__class__" in dict_cont)
 
-    def test_if_name_exists(self):
+    def test_dict_value(self):
         """
-        test if attribute 'name' is present in instance of amenity
+            test the returned dictionar values
         """
-        self.assertTrue(hasattr(self.new_inst, 'name'))
-
-    def test_to_dict_on_Amenity(self):
-        """
-        checks __class__ key in to_dict instance
-        """
-        new_dict = self.new_inst.to_dict()
-        self.assertEqual(new_dict['__class__'], 'Amenity')
-        self.assertEqual(str(type(new_dict['created_at'])), "<class 'str'>")
-        self.assertEqual(str(type(new_dict['updated_at'])), "<class 'str'>")
-
-
-if __name__ == "__main__":
-    unittest.main()
+        time_format = "%Y-%m-%dT%H:%M:%S.%f"
+        insta = Amenity()
+        dict_con = insta.to_dict()
+        self.assertEqual(dict_con["__class__"], "Amenity")
+        self.assertEqual(type(dict_con["created_at"]), str)
+        self.assertEqual(type(dict_con["updated_at"]), str)
+        self.assertEqual(
+                            dict_con["created_at"],
+                            insta.created_at.strftime(time_format)
+                                        )
+        self.assertEqual(
+                            dict_con["updated_at"],
+                            insta.updated_at.strftime(time_format))

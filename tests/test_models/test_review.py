@@ -1,63 +1,82 @@
 #!/usr/bin/python3
-
+"""
+    Test Case For Review Model and its Test
+"""
+from models import BaseModel
+from models import Review
 import unittest
+import inspect
+import time
+from datetime import datetime
+import pep8 as pcs
+from unittest import mock
 import models
-from models.base_model import BaseModel
-from models.user import User
-from models.amenity import Amenity
-from models.state import State
-from models.city import City
-from models.review import Review
-from models.place import Place
 
 
-class reviewTest(unittest.TestCase):
-    '''
-    Test cases for BaseModel class
-    '''
-    def setUp(self):
+class TestReview(unittest.TestCase):
+    """
+        unitesst for Review class
+    """
+    def issub_class(self):
         """
-        simple set up
+            test if Review class is sub class of base model
         """
-        self.new_inst = Review()
+        review = Review()
+        self.assertIsInstance(review, BaseModel)
+        self.assertTrue(hasattr(review, "id"))
+        self.assertTrue(hasattr(review, "created_at"))
+        self.assertTrue(hasattr(review, "update_at"))
 
-    def tearDown(self):
+    def test_place_id_attr(self):
         """
-        tear down method
+            test for class attribute
         """
-        del self.new_inst
+        review = Review()
+        self.assertTrue(hasattr(review, "place_id"))
+        self.assertEqual(review.place_id, "")
 
-    def test_is_basemodel_inst(self):
+    def test_user_id_attr(self):
         """
-        tests if new_inst is an instance of BaseModel
+            test for class attribute
         """
-        self.assertIsInstance(self.new_inst, BaseModel)
+        review = Review()
+        self.assertTrue(hasattr(review, "user_id"))
+        self.assertEqual(review.user_id, "")
 
-    def test_if_name_exists(self):
+    def test_text_attr(self):
         """
-        test if attribute 'name' is present in instance of amenity
+            test for class attribute
         """
-        self.assertTrue(hasattr(self.new_inst, 'text'))
-        self.assertTrue(hasattr(self.new_inst, 'user_id'))
-        self.assertTrue(hasattr(self.new_inst, 'place_id'))
+        review = Review()
+        self.assertTrue(hasattr(review, "text"))
+        self.assertEqual(review.text, "")
 
-    def test_value_attributes(self):
+    def test_to_dictReview(self):
         """
-        checks value of City attributes
+            test to dict method with Review and the type
+            and content
         """
-        self.assertEqual(self.new_inst.place_id, "")
-        self.assertEqual(self.new_inst.user_id, "")
-        self.assertEqual(self.new_inst.text, "")
+        review = Review()
+        dict_cont = review.to_dict()
+        self.assertEqual(type(dict_cont), dict)
+        for attr in review.__dict__:
+            self.assertTrue(attr in dict_cont)
+            self.assertTrue("__class__" in dict_cont)
 
-    def test_to_dict_on_Amenity(self):
+    def test_dict_value(self):
         """
-        checks __class__ key in to_dict instance
+            test the returned dictionar values
         """
-        new_dict = self.new_inst.to_dict()
-        self.assertEqual(new_dict['__class__'], 'Review')
-        self.assertEqual(str(type(new_dict['created_at'])), "<class 'str'>")
-        self.assertEqual(str(type(new_dict['updated_at'])), "<class 'str'>")
-
-
-if __name__ == "__main__":
-    unittest.main()
+        time_format = "%Y-%m-%dT%H:%M:%S.%f"
+        review = Review()
+        dict_con = review.to_dict()
+        self.assertEqual(dict_con["__class__"], "Review")
+        self.assertEqual(type(dict_con["created_at"]), str)
+        self.assertEqual(type(dict_con["updated_at"]), str)
+        self.assertEqual(
+                            dict_con["created_at"],
+                            review.created_at.strftime(time_format)
+                                        )
+        self.assertEqual(
+                            dict_con["updated_at"],
+                            review.updated_at.strftime(time_format))

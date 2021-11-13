@@ -1,61 +1,68 @@
 #!/usr/bin/python3
-
+"""
+    Test Case For city Model and its Test
+"""
+from models import BaseModel
+from models import City
 import unittest
+import inspect
+import time
+from datetime import datetime
+import pep8 as pcs
+from unittest import mock
 import models
-from models.base_model import BaseModel
-from models.user import User
-from models.amenity import Amenity
-from models.state import State
-from models.city import City
-from models.review import Review
-from models.place import Place
 
 
-class cityTest(unittest.TestCase):
-    '''
-    Test cases for base_model class
-    '''
-    def setUp(self):
+class TestCity(unittest.TestCase):
+    """
+        unitesst for City class
+    """
+    def issub_class(self):
         """
-        simple set up
+            test if City class is sub class of base model
         """
-        self.new_inst = City()
+        city = City()
+        self.assertIsInstance(city, BaseModel)
+        self.assertTrue(hasattr(city, "id"))
+        self.assertTrue(hasattr(city, "created_at"))
+        self.assertTrue(hasattr(city, "update_at"))
 
-    def tearDown(self):
+    def test_class_attribute(self):
         """
-        tear down method
+            test for class attribute
         """
-        del self.new_inst
+        city = City()
+        self.assertTrue(hasattr(city, "state_id"))
+        self.assertEqual(city.state_id, "")
+        self.assertTrue(hasattr(city, "name"))
+        self.assertEqual(city.name, "")
 
-    def test_is_basemodel_inst(self):
+    def test_to_dictcity(self):
         """
-        tests if new_inst is an instance of BaseModel
+            test to dict method with city and the type
+            and content
         """
-        self.assertIsInstance(self.new_inst, BaseModel)
+        city = City()
+        dict_cont = city.to_dict()
+        self.assertEqual(type(dict_cont), dict)
+        for attr in city.__dict__:
+            self.assertTrue(attr in dict_cont)
+            self.assertTrue("__class__" in dict_cont)
 
-    def test_if_name_exists(self):
+    def test_dict_value(self):
         """
-        test if attribute 'name' is present in instance of city
+            test the returned dictionar values
         """
-        self.assertTrue(hasattr(self.new_inst, 'name'))
-        self.assertTrue(hasattr(self.new_inst, 'state_id'))
-
-    def test_value_attributes(self):
-        """
-        checks value of City attributes
-        """
-        self.assertEqual(self.new_inst.name, "")
-        self.assertEqual(self.new_inst.state_id, "")
-
-    def test_to_dict_on_Amenity(self):
-        """
-        checks __class__ key in to_dict instance
-        """
-        new_dict = self.new_inst.to_dict()
-        self.assertEqual(new_dict['__class__'], 'City')
-        self.assertEqual(str(type(new_dict['created_at'])), "<class 'str'>")
-        self.assertEqual(str(type(new_dict['updated_at'])), "<class 'str'>")
-
-
-if __name__ == "__main__":
-    unittest.main()
+        time_format = "%Y-%m-%dT%H:%M:%S.%f"
+        city = City()
+        dict_con = city.to_dict()
+        self.assertEqual(dict_con["__class__"], "City")
+        self.assertEqual(type(dict_con["created_at"]), str)
+        self.assertEqual(type(dict_con["updated_at"]), str)
+        self.assertEqual(
+                            dict_con["created_at"],
+                            city.created_at.strftime(time_format)
+                                        )
+        self.assertEqual(
+                            dict_con["updated_at"],
+                            city.updated_at.strftime(time_format))

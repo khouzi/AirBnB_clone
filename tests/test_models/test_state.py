@@ -1,53 +1,66 @@
 #!/usr/bin/python3
-
+"""
+    Test Case For state Model and its Test
+"""
+from models import BaseModel
+from models import State
 import unittest
+import inspect
+import time
+from datetime import datetime
+import pep8 as pcs
+from unittest import mock
 import models
-from models.base_model import BaseModel
-from models.user import User
-from models.amenity import Amenity
-from models.state import State
-from models.city import City
-from models.review import Review
-from models.place import Place
 
 
-class stateTest(unittest.TestCase):
-    '''
-    Test cases for BaseModel class
-    '''
-    def setUp(self):
+class Teststate(unittest.TestCase):
+    """
+        unitesst for state class
+    """
+    def issub_class(self):
         """
-        simple set up
+            test if state class is sub class of base model
         """
-        self.new_inst = State()
+        state = State()
+        self.assertIsInstance(state, BaseModel)
+        self.assertTrue(hasattr(state, "id"))
+        self.assertTrue(hasattr(state, "created_at"))
+        self.assertTrue(hasattr(state, "update_at"))
 
-    def tearDown(self):
+    def test_name_attr(self):
         """
-        tear down method
+            Test that State has attribute name
         """
-        del self.new_inst
+        state = State()
+        self.assertTrue(hasattr(state, "name"))
+        self.assertEqual(state.name, "")
 
-    def test_is_basemodel_inst(self):
+    def test_to_dictstate(self):
         """
-        tests if new_inst is an instance of BaseModel
+            test to dict method with state and the type
+            and content
         """
-        self.assertIsInstance(self.new_inst, BaseModel)
+        state = State()
+        dict_cont = state.to_dict()
+        self.assertEqual(type(dict_cont), dict)
+        for attr in state.__dict__:
+            self.assertTrue(attr in dict_cont)
+            self.assertTrue("__class__" in dict_cont)
 
-    def test_if_name_exists(self):
+    def test_dict_value(self):
         """
-        checks if new_inst has attr 'name'
+            test the returned dictionar values
         """
-        self.assertTrue(hasattr(self.new_inst, 'name'))
-
-    def test_to_dict_on_State(self):
-        """
-        checks to_dict method
-        """
-        new_dict = self.new_inst.to_dict()
-        self.assertEqual(new_dict['__class__'], 'State')
-        self.assertEqual(str(type(new_dict['created_at'])), "<class 'str'>")
-        self.assertEqual(str(type(new_dict['updated_at'])), "<class 'str'>")
-
-
-if __name__ == "__main__":
-    unittest.main()
+        time_format = "%Y-%m-%dT%H:%M:%S.%f"
+        state = State()
+        dict_con = state.to_dict()
+        self.assertEqual(dict_con["__class__"], "State")
+        self.assertEqual(type(dict_con["created_at"]), str)
+        self.assertEqual(type(dict_con["updated_at"]), str)
+        self.assertEqual(
+                            dict_con["created_at"],
+                            state.created_at.strftime(time_format)
+                                        )
+        self.assertEqual(
+                            dict_con["updated_at"],
+                            state.updated_at.strftime(time_format))
