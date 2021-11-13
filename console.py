@@ -139,7 +139,7 @@ class HBNBCommand(cmd.Cmd):
                     list.append((dict_obj[k].__str__()))
         else:
             for k, v in dict_obj.items():
-                l.append((dict_obj[k].__str__()))
+                list.append((dict_obj[k].__str__()))
         print(list)
 
     def do_update(self, args):
