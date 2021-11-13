@@ -2,8 +2,8 @@
 """
     Test Case For user Model and its Test
 """
-from models import BaseModel
-from models import User
+from models.base_model import BaseModel
+from models.user import User
 import unittest
 import inspect
 import time

@@ -2,8 +2,8 @@
 """
     Test Case For Review Model and its Test
 """
-from models import BaseModel
-from models import Review
+from models.base_model import BaseModel
+from models.review import Review
 import unittest
 import inspect
 import time

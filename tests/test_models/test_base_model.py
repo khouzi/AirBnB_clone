@@ -2,7 +2,7 @@
 """
     Test Case For Base Model and its Test
 """
-from models import BaseModel
+from models.base_model import BaseModel
 import unittest
 import inspect
 import time
@@ -10,7 +10,7 @@ from datetime import datetime
 import pep8 as pcs
 from unittest import mock
 import models
-base_doc = models.BaseModel.__doc__
+base_doc = models.__doc__
 
 
 class TestDocBaseModule(unittest.TestCase):

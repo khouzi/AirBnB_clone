@@ -2,8 +2,8 @@
 """
     Test Case For Place Model and its Test
 """
-from models import BaseModel
-from models import Place
+from models.base_model import BaseModel
+from models.place import Place
 import unittest
 import inspect
 import time
