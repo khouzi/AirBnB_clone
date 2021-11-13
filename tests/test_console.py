@@ -281,3 +281,9 @@ EOF  all  create  destroy  help  quit  show  update
                 HBNBCommand().onecmd("update {} 1212121".format(className))
                 expected = "** no instance found **\n"
                 self.assertEqual(expected, f.getvalue())
+
+
+<< << << < HEAD
+== == == =
+
+>>>>>> > 493f6c1177f773d23c7ecb385709fb0542e4ef27
