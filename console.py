@@ -128,7 +128,7 @@ class HBNBCommand(cmd.Cmd):
         """
         args = args.split()
         dict_obj = storage.all()
-        l = []
+        list = []
         if len(args):
             class_name = args[0]
             if class_name not in self.classes:
@@ -136,11 +136,11 @@ class HBNBCommand(cmd.Cmd):
                 return
             for k, v in dict_obj.items():
                 if class_name in k:
-                    l.append((dict_obj[k].__str__()))
+                    list.append((dict_obj[k].__str__()))
         else:
             for k, v in dict_obj.items():
                 l.append((dict_obj[k].__str__()))
-        print(l)
+        print(list)
 
     def do_update(self, args):
         """
