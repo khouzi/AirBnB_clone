@@ -1,4 +1,4 @@
-![65f4a1dd9c51265f49d0](https:// user-images.githubusercontent.com/77971241/124041240-68512100-d9fe-11eb-986b-680fa72d7fd5.png)
+![65f4a1dd9c51265f49d0](https://user-images.githubusercontent.com/77971241/124041240-68512100-d9fe-11eb-986b-680fa72d7fd5.png)
 
 # Description of the project
 
