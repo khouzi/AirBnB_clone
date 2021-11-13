@@ -1,4 +1,4 @@
-![65f4a1dd9c51265f49d0](https: // user - images.githubusercontent.com / 77971241 / 124041240 - 68512100 - d9fe - 11eb - 986b - 680fa72d7fd5.png)
+![65f4a1dd9c51265f49d0](https:// user-images.githubusercontent.com/77971241/124041240-68512100-d9fe-11eb-986b-680fa72d7fd5.png)
 
 # Description of the project
 
@@ -15,22 +15,22 @@ This first step is very important because we will use what we build during this 
 
 To use our AirBnB clone console you need to:
 
-```git clone https: // github.com / youssefboussaid / AirBnB_clone.git```
+```git clone https:// github.com/youssefboussaid/AirBnB_clone.git```
 
 
 Use  the command interpreter hbnb in an interactive mode:
 
 `
-. / console.py
+./console.py
 `
 `
 (hbnb)(command)
 `
 
 
-Use hbnb in non - interactive mode too by:
+Use hbnb in non-interactive mode too by:
 
-`echo "command" | . / console.py`
+`echo "command" | ./console.py`
 
 # How to Use Command Interpreter
 ---
@@ -48,38 +48,38 @@ Use hbnb in non - interactive mode too by:
 # Usage
 Interactive Mode
 ```
-$ . / console.py
+ ./console.py
 (hbnb) help
 Documented commands (type help < topic > ):
-== == == == == == == == == == == == == == == == == == == ==
+========================================
 EOF  help  quit
 (hbnb)
 (hbnb)
 (hbnb) quit
-$
+
 ```
-Non - Interactive Mode
+Non-Interactive Mode
 ```
-$ echo "help" | . / console.py
+ echo "help" | ./console.py
 (hbnb)
 Documented commands (type help < topic > ):
-== == == == == == == == == == == == == == == == == == == ==
+========================================
 EOF  help  quit
 (hbnb)
-$
-$ cat test_help
+
+ cat test_help
 help
-$
-$ cat test_help | . / console.py
+
+ cat test_help | ./console.py
 (hbnb)
 Documented commands (type help < topic > ):
-== == == == == == == == == == == == == == == == == == == ==
+========================================
 EOF  help  quit
 (hbnb)
-$
+
 ```
 
 # Authors
-youssef boussaid https: // github.com / youssefboussaid
+youssef boussaid https:// github.com/youssefboussaid
 
-khouzem boussaid https: // github.com / khouzi
+khouzem boussaid https:// github.com/khouzi
