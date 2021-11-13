@@ -14,15 +14,23 @@ from models.place import Place
 from models.review import Review
 
 
-
 class HBNBCommand(cmd.Cmd):
     """
     HBNBCommand class
     """
     prompt = "(hbnb)"
 
-    classes = {"BaseModel", "User", "Amenity",
-               "State", "City", "Place", "Review"}
+    classes = ["BaseModel", "User", "Amenity",
+               "State", "City", "Place", "Review"]
+
+    @classmethod
+    def count(self, class_name, objects_dict):
+        """ count the number of instance"""
+        counter = 0
+        for key in objects_dict.keys():
+            if class_name in key:
+                counter += 1
+        print(counter)
 
     def do_quit(self, args):
         """
@@ -156,10 +164,9 @@ class HBNBCommand(cmd.Cmd):
                     print("** value missing **")
                 else:
                     obj = objects[k]
-                    setattr(obj , args[2], args[3])
+                    setattr(obj, args[2], args[3])
             else:
                 print("** no instance found **")
-
 
 
 if __name__ == '__main__':
