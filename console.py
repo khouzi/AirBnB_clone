@@ -79,21 +79,25 @@ class HBNBCommand(cmd.Cmd):
         instance based on the class name and id
         """
         args = args.split()
-        if args == "":
+        if len(args) == 0:
             print("** class name missing **")
             return
-        if args[0] not in self.classes:
+        try:
+            eval(args[0])
+        except Exception:
             print("** class doesn't exist **")
             return
         if len(args) == 1:
             print("** instance id missing **")
-            return
-        dict_obj = storage.all()
-        my_key = args[0] + "." + args[1]
-        if my_key in dict_obj:
-            print(dict_obj[my_key])
         else:
-            print("** no instance found **")
+            storage.reload()
+            container_obj = storage.all()
+            key_id = args[0] + "." + args[1]
+            if key_id in container_obj:
+                value = container_obj[key_id]
+                print(value)
+            else:
+                print("** no instance found **")
 
     def do_destroy(self, args):
         """
