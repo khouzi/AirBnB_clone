@@ -18,7 +18,7 @@ class HBNBCommand(cmd.Cmd):
     """
     HBNBCommand class
     """
-    prompt = "(hbnb)"
+    prompt = "(hbnb) "
 
     classes = ["BaseModel", "User", "Amenity",
                "State", "City", "Place", "Review"]
