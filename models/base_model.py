@@ -12,24 +12,23 @@ class BaseModel:
     Base model that defines all common attributes/methods for other classes
     """
 
-    def __init__(self, *args, **kwagrs):
+    def __init__(self, *args, **kwargs):
         """
         init methode
         """
         time_format = "%Y-%m-%dT%H:%M:%S.%f"
-        if len(kwagrs) == 0:
-            self.id = str(uuid.uuid4())
-            self.created_at = datetime.now()
-            self.updated_at = datetime.now()
-            models.storage.new(self)
-            models.storage.save()
+        self.id = str(uuid.uuid4())
+        self.created_at = datetime.now()
+        self.updated_at = datetime.now()
 
-        elif len(kwagrs) > 0:
+        if kwargs:
             for k, v in kwagrs.items():
                 if k == "created_at" or k == "updated_at":
                     v = datetime.strptime(v, time_format)
                 if k != "__class__":
                     setattr(self, k, v)
+        else:
+            models.storage.new(self)
 
     def __str__(self):
         """
