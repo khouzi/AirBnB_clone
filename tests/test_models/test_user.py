@@ -1,65 +1,84 @@
 #!/usr/bin/python3
-
+"""
+    Test Case For user Model and its Test
+"""
+from models import BaseModel
+from models import User
 import unittest
+import inspect
+import time
+from datetime import datetime
+import pep8 as pcs
+from unittest import mock
 import models
-from models.base_model import BaseModel
-from models.user import User
-from models.amenity import Amenity
-from models.state import State
-from models.city import City
-from models.review import Review
-from models.place import Place
 
 
-class userTest(unittest.TestCase):
-    '''
-    Test cases for BaseModel class
-    '''
-    def setUp(self):
+class TestUser(unittest.TestCase):
+    """
+        unitesst for user class
+    """
+    def issub_class(self):
         """
-        simple set up
+            test if User class is sub class of base model
         """
-        self.new_inst = User()
+        user = User()
+        self.assertIsInstance(user, BaseModel)
+        self.assertTrue(hasattr(user, "id"))
+        self.assertTrue(hasattr(user, "created_at"))
+        self.assertTrue(hasattr(user, "update_at"))
 
-    def tearDown(self):
+    def test_email(self):
         """
-        tear down method
+            test class attribute email
         """
-        del self.new_inst
+        user = User()
+        self.assertTrue(hasattr(user, "email"))
+        self.assertEqual(user.email, "")
 
-    def test_is_basemodel_inst(self):
+    def test_password(self):
         """
-        tests if new_inst is an instance of BaseModel
+            test class attribute password
         """
-        self.assertIsInstance(self.new_inst, BaseModel)
+        user = User()
+        self.assertTrue(hasattr(user, "password"))
+        self.assertEqual(user.password, "")
 
-    def test_if_name_exists(self):
+    def test_name(self):
         """
-        test if attribute 'name' is present in instance of amenity
+            test class atribute first_name and last_name
         """
-        self.assertTrue(hasattr(self.new_inst, 'email'))
-        self.assertTrue(hasattr(self.new_inst, 'password'))
-        self.assertTrue(hasattr(self.new_inst, 'first_name'))
-        self.assertTrue(hasattr(self.new_inst, 'last_name'))
+        user = User()
+        self.assertTrue(hasattr(user, "first_name"))
+        self.assertEqual(user.first_name, "")
+        self.assertTrue(hasattr(user, "last_name"))
+        self.assertEqual(user.last_name, "")
 
-    def test_value_attributes(self):
+    def test_to_dictUser(self):
         """
-        checks value of City attributes
+            test to dict method with user and the type
+            and content
         """
-        self.assertEqual(self.new_inst.email, "")
-        self.assertEqual(self.new_inst.password, "")
-        self.assertEqual(self.new_inst.first_name, "")
-        self.assertEqual(self.new_inst.last_name, "")
+        user = User()
+        dict_cont = user.to_dict()
+        self.assertEqual(type(dict_cont), dict)
+        for attr in user.__dict__:
+            self.assertTrue(attr in dict_cont)
+            self.assertTrue("__class__" in dict_cont)
 
-    def test_to_dict_on_Amenity(self):
+    def test_dict_value(self):
         """
-        checks __class__ key in to_dict instance
+            test the returned dictionar values
         """
-        new_dict = self.new_inst.to_dict()
-        self.assertEqual(new_dict['__class__'], 'User')
-        self.assertEqual(str(type(new_dict['created_at'])), "<class 'str'>")
-        self.assertEqual(str(type(new_dict['updated_at'])), "<class 'str'>")
-
-
-if __name__ == "__main__":
-    unittest.main()
+        time_format = "%Y-%m-%dT%H:%M:%S.%f"
+        user = User()
+        dict_con = user.to_dict()
+        self.assertEqual(dict_con["__class__"], "User")
+        self.assertEqual(type(dict_con["created_at"]), str)
+        self.assertEqual(type(dict_con["updated_at"]), str)
+        self.assertEqual(
+                            dict_con["created_at"],
+                            user.created_at.strftime(time_format)
+                                        )
+        self.assertEqual(
+                            dict_con["updated_at"],
+                            user.updated_at.strftime(time_format))
