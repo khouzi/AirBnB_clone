@@ -108,7 +108,7 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
             return
         tokens = args.split(" ")
-        objects = models.storage.all()
+        objects = storage.all()
 
         if tokens[0] in self.classes:
             if len(tokens) < 2:
@@ -120,9 +120,9 @@ class HBNBCommand(cmd.Cmd):
             else:
                 obj = objects[name]
                 if obj:
-                    objs = models.storage.all()
+                    objs = storage.all()
                     del objs["{}.{}".format(type(obj).__name__, obj.id)]
-                    models.storage.save()
+                    storage.save()
         else:
             print("** class doesn't exist **")
 
