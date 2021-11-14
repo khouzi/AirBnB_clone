@@ -22,7 +22,7 @@ class BaseModel:
         self.updated_at = datetime.now()
 
         if kwargs:
-            for k, v in kwagrs.items():
+            for k, v in kwargs.items():
                 if k == "created_at" or k == "updated_at":
                     v = datetime.strptime(v, time_format)
                 if k != "__class__":
