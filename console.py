@@ -4,6 +4,7 @@ console module
 """
 
 import cmd
+from datetime import datetime
 from models import storage
 from models.base_model import BaseModel
 from models.user import User
@@ -152,25 +153,37 @@ class HBNBCommand(cmd.Cmd):
         name and id by adding or updating attribute
         """
         args = args.split()
-        objects = storage.all()
-        if args == "":
+        if not args:
             print("** class name missing **")
+            return
         if args[0] not in self.classes:
             print("** class doesn't exist **")
-        if len(args) < 2:
+            return
+        try:
+            args[1]
+        except Exception:
             print("** instance id missing **")
-        else:
-            k = "{}.{}".format(args[0], args[1])
-            if k in objects:
-                if len(args) < 3:
-                    print("** attribute name missing **")
-                if len(args) < 4:
-                    print("** value missing **")
-                else:
-                    obj = objects[k]
-                    setattr(obj, args[2], args[3])
-            else:
-                print("** no instance found **")
+            return
+        objects_dict = storage.all()
+        my_key = args[0] + "." + args[1]
+        if my_key not in objects_dict:
+            print("** no instance found **")
+            return
+        try:
+            args[2]
+        except Exception:
+            print("** attribute name missing **")
+            return
+        try:
+            args[3]
+        except Exception:
+            print("** value missing **")
+            return
+        if args[3]:
+            setattr(objects_dict[my_key], args[2], args[3])
+            my_obj = objects_dict[my_key]
+            my_obj.updated_at = datetime.now()
+            storage.save()
 
 
 if __name__ == '__main__':
