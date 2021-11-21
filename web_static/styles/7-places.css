@@ -15,6 +15,7 @@
     border: 1px solid #ff5a5f;
     border-radius: 4px;
     display: flex;
+    flex-wrap: wrap;
 }
 
 .places article h2 {
